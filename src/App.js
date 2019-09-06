@@ -1,4 +1,5 @@
 import React from 'react';
+import Routes from './config/routes';
 import NavBar from './components/Layout/NavBar';
 import './App.css';
 
@@ -7,7 +8,7 @@ function App() {
     <>
       <NavBar />
       <div className="App">
-        <h1>Final Project Front-End</h1>
+        <Routes />
       </div>
     </>
     
