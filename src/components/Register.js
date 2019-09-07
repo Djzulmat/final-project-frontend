@@ -1,70 +1,119 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import { API_URL } from '../constants';
+import React, { Component } from "react";
+import axios from "axios";
+import { API_URL } from "../constants";
 
 class Register extends Component {
+  state = {
+    username: "",
+    email: "",
+    password: "",
+    errors: {},
+    loggedIn: null
+  };
 
-    state = {
-        username: '',
-        email: '',
-        password: '',
-        password2: '',
-        errors: null,
-    };
+  handleChange = event => {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  };
 
-    handleChange = (event) => {
-        this.setState({
-            [event.target.name]: event.target.value,
+  handleSubmit = event => {
+    event.preventDefault();
+    const newUser = this.state;
+    axios
+      .post(`${API_URL}/auth/register`, newUser, { withCredentials: true })
+      .then(res => {
+        this.setState({ loggedIn: true }, () => {
+          this.props.history.push("appointments");
         });
-    };
+      })
+      .catch(err => {
+        this.setState({ errors: err.response.data.errors });
+      });
+  };
 
-    handleSubmit = (event) => {
-        event.preventDefault();
-        const newUser = this.state;
-        axios.post(`${API_URL}/auth/register`, newUser, { withCredentials: true })
-            .then(res => this.props.history.push('/login'))
-            .catch(err => {
-                this.setState({ errors: err.response.data.error });
-            });
-    };
+  render() {
+    const { errors, loggedIn } = this.state;
 
-    render() {
-        return (
-            <div className="row">
-                {this.state.errors && this.state.errors.map((e, i) => (
-                    <div className="alert-danger alert-dismissable fade show" style={{width: '100%'}} role="alert" key={i}>
-                        {e.message}
-                        <button type="button" className="close" data-dismiss="alert" arial-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                ))}
-                <section id="register" className="col-md-6 offset-md-3">
-                    <h2 className="mb-4">Register</h2>
-                    <form onSubmit={this.handleSubmit}>
-                        <div className="form-group">
-                            <label htmlFor="username">Username</label>
-                            <input type="username" id="username" name="username" value={this.state.username} onChange={this.handleChange} className="form-control form-control-lg" placeholder="Please enter your username..."/>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="email">Email</label>
-                            <input type="email" id="email" name="email" value={this.state.email} onChange={this.handleChange} className="form-control form-control-lg" placeholder="example@example.com"/>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="password">Password</label>
-                            <input type="password" id="password" name="password" value={this.state.password} onChange={this.handleChange} className="form-control form-control-lg" />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="password2">Confirm Password</label>
-                            <input type="password" id="password2" name="password2" value={this.state.password2} onChange={this.handleChange} className="form-control form-control-lg" />
-                        </div>
-                        <button type="submit" className="btn btn-primary float-right">Register</button>
-                    </form>
-                </section>
-            </div>
-
-        );
-    };
-};
+    if (loggedIn == null) {
+      return "I am loading";
+    } else {
+      return (
+        <div className="row">
+          <section id="register" className="col-md-6 offset-md-3">
+            <h2 className="mb-4">Register</h2>
+            <form onSubmit={this.handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="username">Username</label>
+                <input
+                  type="username"
+                  id="username"
+                  name="username"
+                  value={this.state.username}
+                  onChange={this.handleChange}
+                  className="form-control form-control-lg"
+                  placeholder="Please enter your username..."
+                />
+                {errors.username && (
+                  <div
+                    className="alert-danger alert-dismissable fade show"
+                    style={{ width: "100%" }}
+                    role="alert"
+                  >
+                    {errors.username}
+                  </div>
+                )}
+              </div>
+              <div className="form-group">
+                <label htmlFor="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={this.state.email}
+                  onChange={this.handleChange}
+                  className="form-control form-control-lg"
+                  placeholder="example@example.com"
+                />
+                {errors.email && (
+                  <div
+                    className="alert-danger alert-dismissable fade show"
+                    style={{ width: "100%" }}
+                    role="alert"
+                  >
+                    {errors.email}
+                  </div>
+                )}
+              </div>
+              <div className="form-group">
+                <label htmlFor="password">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={this.state.password}
+                  onChange={this.handleChange}
+                  className="form-control form-control-lg"
+                />
+                {errors.password && (
+                  <div
+                    className="alert-danger alert-dismissable fade show"
+                    style={{ width: "100%" }}
+                    role="alert"
+                  >
+                    {errors.password}
+                  </div>
+                )}
+              </div>
+              <button type="submit" className="btn btn-primary float-right">
+                Register
+              </button>
+            </form>
+          </section>
+        </div>
+      );
+    }
+  }
+}
 
 export default Register;
