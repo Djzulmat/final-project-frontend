@@ -1,15 +1,34 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { API_URL } from "../constants";
+import { UserContext } from "../UserContext";
+
+import "./Register.css";
 
 class Register extends Component {
   state = {
     username: "",
     email: "",
     password: "",
+    role: "doctor",
     errors: {},
     loggedIn: null
   };
+
+  componentDidMount() {
+    const { loggedIn } = this.context;
+    if (loggedIn) {
+      this.props.history.push("appointments");
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { loggedIn } = this.context;
+
+    if (loggedIn) {
+      this.props.history.push("appointments");
+    }
+  }
 
   handleChange = event => {
     this.setState({
@@ -24,6 +43,8 @@ class Register extends Component {
       .post(`${API_URL}/auth/register`, newUser, { withCredentials: true })
       .then(res => {
         this.setState({ loggedIn: true }, () => {
+          this.props.fetchUser();
+          // console.log(this.props);
           this.props.history.push("appointments");
         });
       })
@@ -32,8 +53,16 @@ class Register extends Component {
       });
   };
 
+  selectRole = event => {
+    console.log(event.target.value);
+    this.setState({
+      role: event.target.value
+    });
+  };
+
   render() {
-    const { errors, loggedIn } = this.state;
+    const { errors } = this.state;
+    const { loggedIn } = this.context;
 
     if (loggedIn == null) {
       return "I am loading";
@@ -44,26 +73,49 @@ class Register extends Component {
             <h2 className="mb-4">Register</h2>
             <form onSubmit={this.handleSubmit}>
               <div className="form-group">
-                <label htmlFor="username">Username</label>
+                <label htmlFor="username">First name</label>
                 <input
-                  type="username"
-                  id="username"
-                  name="username"
-                  value={this.state.username}
+                  type="first_name"
+                  id="first_name"
+                  name="first_name"
+                  value={this.state.first_name}
                   onChange={this.handleChange}
                   className="form-control form-control-lg"
-                  placeholder="Please enter your username..."
+                  placeholder="Enter your First name"
                 />
-                {errors.username && (
+                {errors.first_name && (
                   <div
                     className="alert-danger alert-dismissable fade show"
                     style={{ width: "100%" }}
                     role="alert"
                   >
-                    {errors.username}
+                    {errors.first_name}
                   </div>
                 )}
               </div>
+
+              <div className="form-group">
+                <label htmlFor="username">Last name</label>
+                <input
+                  type="last_name"
+                  id="last_name"
+                  name="last_name"
+                  value={this.state.last_name}
+                  onChange={this.handleChange}
+                  className="form-control form-control-lg"
+                  placeholder="Enter your Last name"
+                />
+                {errors.last_name && (
+                  <div
+                    className="alert-danger alert-dismissable fade show"
+                    style={{ width: "100%" }}
+                    role="alert"
+                  >
+                    {errors.last_name}
+                  </div>
+                )}
+              </div>
+
               <div className="form-group">
                 <label htmlFor="email">Email</label>
                 <input
@@ -105,6 +157,31 @@ class Register extends Component {
                   </div>
                 )}
               </div>
+              <div className="form-group role-button">
+                <div>
+                  <input
+                    type="radio"
+                    id="doctor"
+                    name="role"
+                    onClick={this.selectRole}
+                    checked={this.state.role === "doctor"}
+                    value="doctor"
+                  />
+                  <label htmlFor="doctor">Doctor</label>
+                </div>
+
+                <div>
+                  <input
+                    type="radio"
+                    id="patient"
+                    name="role"
+                    onClick={this.selectRole}
+                    checked={this.state.role === "patient"}
+                    value="patient"
+                  />
+                  <label htmlFor="patient">Patient</label>
+                </div>
+              </div>
               <button type="submit" className="btn btn-primary float-right">
                 Register
               </button>
@@ -115,5 +192,7 @@ class Register extends Component {
     }
   }
 }
+
+Register.contextType = UserContext;
 
 export default Register;

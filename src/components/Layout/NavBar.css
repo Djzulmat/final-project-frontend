@@ -1,0 +1,37 @@
+.navbar {
+  padding: 0px;
+  box-shadow: 0px 0px 4px grey;
+  background: #292626;
+  justify-content: flex-end;
+  height: 60px;
+}
+ul.nav {
+  background: #e4e4e4;
+  height: 100%;
+}
+
+ul.nav li {
+  color: #574371c4;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  padding-top: 10px;
+}
+
+ul.nav li.active {
+  background: #f1faeb;
+
+  color: #574371c4;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+ul.nav li:hover {
+  background: #796a8c;
+  color: #c7b6dc;
+  cursor: pointer;
+}
+
+#logo {
+  height: 100%;
+}

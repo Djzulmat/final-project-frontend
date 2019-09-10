@@ -1,0 +1,19 @@
+body {
+  background-image: none;
+}
+
+#login {
+  padding-top: 10px;
+  margin-top: 20px;
+}
+
+.btn {
+  background-color: #4db618;
+  border: none;
+}
+
+.btn:hover {
+  background: #e62b1e;
+  color: #1e1a1a;
+  cursor: pointer;
+}

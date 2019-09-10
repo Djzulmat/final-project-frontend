@@ -1,0 +1,25 @@
+.main {
+  padding: 0px;
+  box-shadow: 0px 0px 4px grey;
+  /* background: #beaad8; */
+  */justify-content: flex-end;
+  height: 100vh;
+  background: #d4c0ef4f;
+}
+.main .row div {
+  text-align: center;
+  vertical-align: middle;
+  padding: 100px;
+  font-size: 30px;
+  color: #908686;
+}
+.main .row div img {
+  box-shadow: 10px 10px;
+  border-radius: 5px;
+}
+
+.intro {
+  text-align: center;
+  margin-top: 60px;
+  margin-left: 20px;
+}
