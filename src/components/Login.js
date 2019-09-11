@@ -58,7 +58,7 @@ class Login extends Component {
 
   render() {
     const { errors } = this.state;
-    const { loggedIn } = this.context;
+    // const { loggedIn } = this.context;
 
     return (
       <div className="row">

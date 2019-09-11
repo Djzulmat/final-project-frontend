@@ -13,8 +13,9 @@
   font-size: 30px;
   color: #908686;
 }
-.main .row div img {
-  box-shadow: 10px 10px;
+.row div img {
+  box-shadow: 0 4px 8px 0 rgba(10, 10, 10, 0.2),
+    0 6px 20px 0 rgba(10, 10, 10, 0.19);
   border-radius: 5px;
 }
 
@@ -22,4 +23,6 @@
   text-align: center;
   margin-top: 60px;
   margin-left: 20px;
+  color: black;
+  text-shadow: 2px 2px #908686;
 }

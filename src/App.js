@@ -1,8 +1,7 @@
 import React from "react";
 import Routes from "./config/routes";
-import Authorization from "./Authorization";
 import NavBar from "./components/Layout/NavBar";
-import { UserContext, data } from "./UserContext";
+import { UserContext } from "./UserContext";
 import axios from "axios";
 import { API_URL } from "./constants";
 
@@ -34,7 +33,7 @@ class App extends React.Component {
   };
 
   render() {
-    const { user, loggedIn } = this.state;
+    // const { loggedIn } = this.state;
 
     return (
       <UserContext.Provider value={this.state}>

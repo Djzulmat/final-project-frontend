@@ -4,6 +4,8 @@ import { API_URL } from "../constants";
 import { UserContext } from "../UserContext";
 import Edit from "./Edit";
 
+import "./Appointments.css";
+
 class Appointments extends Component {
   state = {
     appointment: {},
@@ -86,7 +88,7 @@ class Appointments extends Component {
         withCredentials: true
       })
       .then(res => {
-        alert("Succesfully deleted appointment");
+        // alert("Succesfully deleted appointment");
         this.fetchAppointments();
       })
       .catch(err => {
@@ -104,7 +106,7 @@ class Appointments extends Component {
         withCredentials: true
       })
       .then(res => {
-        alert("Succesfully created appointment");
+        // alert("Succesfully created appointment");
         this.setState({ appointment: {} });
         this.fetchAppointments();
       })
@@ -126,7 +128,7 @@ class Appointments extends Component {
         <div>
           <button
             type="button"
-            className="btn btn-secondary"
+            className="btn btn-secondary approve-button"
             data-dismiss="modal"
             onClick={() => {
               axios
@@ -138,7 +140,7 @@ class Appointments extends Component {
                   }
                 )
                 .then(res => {
-                  alert("Appointment has been approved");
+                  // alert("Appointment has been approved");
                   this.fetchAppointments();
                 })
                 .catch(err => {
@@ -150,7 +152,7 @@ class Appointments extends Component {
           </button>
           <button
             type="button"
-            className="btn btn-primary"
+            className="btn btn-primary cancel-button"
             onClick={() => {
               axios
                 .put(
@@ -161,7 +163,7 @@ class Appointments extends Component {
                   }
                 )
                 .then(res => {
-                  alert("Appointment has been canceled");
+                  // alert("Appointment has been canceled");
                   this.fetchAppointments();
                 })
                 .catch(err => {
@@ -184,10 +186,10 @@ class Appointments extends Component {
 
     return (
       <div className="wrapper">
-        <div className="row" style={{ margin: "40px" }}>
+        <div className="row patient-table" style={{ margin: "40px" }}>
           <div className="col-sm-12">
             <h2>Appointments</h2>
-            <table className="table">
+            <table className="table ">
               <thead>
                 <tr>
                   <th scope="col">#</th>
@@ -220,7 +222,7 @@ class Appointments extends Component {
                         >
                           <button
                             type="button"
-                            className="btn btn-primary float-right"
+                            className="btn btn-primary float-right edit-button"
                             data-toggle="modal"
                             data-target="#editAppointment"
                             onClick={() => {
@@ -234,7 +236,7 @@ class Appointments extends Component {
                         </div>
                         <button
                           type="button"
-                          className="btn btn-secondary float-right"
+                          className="btn btn-secondary float-right delete-button"
                           onClick={event => {
                             event.preventDefault();
                             this.deleteAppointment(appointment._id);
@@ -254,7 +256,7 @@ class Appointments extends Component {
           className="row"
           style={{
             margin: "40px",
-            display: user.role == "patient" ? "block" : "none"
+            display: user.role === "patient" ? "block" : "none"
           }}
         >
           <div className="col-sm-12">
